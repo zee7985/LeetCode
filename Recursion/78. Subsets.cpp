@@ -24,7 +24,7 @@ Output:
 
 class Solution {
 public:
-    //2 solution
+    //3 solution
     
 //     //1.Bit masking
 //     vector<vector<int>> subsets(vector<int>& nums) {
@@ -81,6 +81,38 @@ public:
         //there is nums[i]
         temp.push_back(nums[i]);
         subsetRecusion(nums, ans, temp, i+1);
+    }
+    
+    
+     //3. Similar to permutation
+     void helper(vector<int>& nums, vector<vector<int>> &ans,vector<int>& c,int idx){
+        // if(c.size() == nums.size()){
+        ans.push_back(c);
+            // return;
+        // }
+        for(int i = idx; i < nums.size(); i++){
+            if(count(c.begin(), c.end(), nums[i]) == 0){
+                c.push_back(nums[i]);
+                helper(nums, ans,c,i+1);
+                c.pop_back();
+            }
+        }
+     }
+         
+         
+    vector<vector<int>> subsets(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> ans;
+        vector<int> temp;
+        
+        if (n == 0)
+            return ans;
+            
+        sort(nums.begin(), nums.end());
+        
+        helper(nums, ans, temp,0);
+        
+        return ans;
     }
         
   
