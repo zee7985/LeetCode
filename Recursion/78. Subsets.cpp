@@ -91,10 +91,9 @@ public:
             // return;
         // }
         for(int i = idx; i < nums.size(); i++){
-            if(count(c.begin(), c.end(), nums[i]) == 0){
-                c.push_back(nums[i]);
-                helper(nums, ans,c,i+1);
-                c.pop_back();
+              c.push_back(nums[i]);
+              helper(nums, ans,c,i+1);
+              c.pop_back();
             }
         }
      }
