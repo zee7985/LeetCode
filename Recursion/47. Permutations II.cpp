@@ -67,6 +67,41 @@ public:
         
         return ans;
     }
+    
+    
+    //3.
+    
+    I prefer to use the unordered_map to solve the dup problem. How does it solve the problem? because it treats all the dup as one element with several copies.
+
+    For example, [1, 1, 2], when you iterate, in the same "level", the 1 will only be put once. We only put the other 1 into the vector in the recursive call in next levels.
+
+    class Solution {
+        void helper(unordered_map<int, int>& bar, vector<int>& temp, vector<vector<int>>& res, int n){
+        if(temp.size() == n){
+            res.push_back(temp);
+            return ;
+        }
+        for(auto &i : bar){
+            if(i.second <= 0) continue;
+            i.second --;
+            temp.push_back(i.first);
+            helper(bar, temp, res, n);
+            temp.pop_back();
+            i.second ++;
+        }
+    }
+    
+    public:
+      vector<vector<int>> permuteUnique(vector<int>& nums) {
+          vector<vector<int>> res;
+          unordered_map<int, int> bar;
+          for(int i : nums){
+              bar[i] ++;
+          }
+          vector<int> temp;
+          helper(bar, temp, res, nums.size());
+          return res;
+    }
 };
 
 
