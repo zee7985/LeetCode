@@ -1,0 +1,115 @@
+949. Largest Time for Given Digits
+Easy
+Given an array of 4 digits, return the largest 24 hour time that can be made.
+
+The smallest 24 hour time is 00:00, and the largest is 23:59.  Starting from 00:00, a time is larger if more time has elapsed since midnight.
+
+Return the answer as a string of length 5.  If no valid time can be made, return an empty string.
+
+ 
+
+Example 1:
+
+Input: A = [1,2,3,4]
+Output: "23:41"
+Example 2:
+
+Input: A = [5,5,5,5]
+Output: ""
+Example 3:
+
+Input: A = [0,0,0,0]
+Output: "00:00"
+Example 4:
+
+Input: A = [0,0,1,0]
+Output: "10:00"
+ 
+
+Constraints:
+
+arr.length == 4
+0 <= arr[i] <= 9
+
+
+class Solution {
+public:
+    string largestTimeFromDigits(vector<int>& arr) {
+//         int count[10]={0};
+//         int a=-1,b=-1,c=-1,d=-1;
+//         for(int i=0;i<arr.size();i++)
+//         {
+//             count[arr[i]]++;
+//         }
+//         string s;
+        
+//         for(int i=2;i>=0;i--)
+//         {
+//             if(count[i]>0)
+//             {
+//                 a=i;
+//                 count[i]--;
+//                 int j;
+//                 if(i==2)
+//                 {
+//                     j=3;
+                    
+//                 }
+//                 else if(i==1 || i==0)
+//                 {
+//                      j=9;
+//                 }
+//                 for(;j>=0;j--)
+//                 {
+//                     if(count[j]>0)
+//                     {
+//                         b=j;
+//                         count[j]--;
+//                         for(int k=5;k>=0;k--)
+//                         {
+//                             if(count[k]>0)
+//                             {
+//                                 c=k;
+//                                 count[k]--;
+//                                 for(int l=9;l>=0;l--)
+//                                 {
+//                                     if(count[l]>0)
+//                                     {
+//                                         d=l;
+//                                         count[l]--;
+//                                     }
+//                                 }
+//                             }
+//                         }
+//                     }
+//                 }
+                
+//             }
+//         }
+//         if(a==-1 || b==-1 || c==-1 || d==-1)
+//         {
+//             return "";
+//         }
+//         s=to_string(a) + to_string(b) + ":" + to_string(c) + to_string(d);
+//         return s;
+        
+//     }
+        
+        
+         string res = "";
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    for (int k = 0; k < 4; k++) {
+                        if (i == j || j == k || i == k)
+                            continue;
+                        string HH = to_string(arr[i]) + "" + to_string(arr[j]);
+                        string MM =to_string( arr[k]) + "" + to_string(arr[6 - i - j - k]);
+                        string TIME = HH + ":" + MM;
+                        if (HH.compare("24") < 0 && MM.compare("60") < 0 && res.compare(TIME) < 0)
+                            res = TIME;
+                    }
+                }
+            }
+            return res;
+    }
+};
