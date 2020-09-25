@@ -28,24 +28,65 @@ There are two ways to reach the bottom-right corner:
 1. Right -> Right -> Down -> Down
 2. Down -> Down -> Right -> Right
 
-
 class Solution {
 public:
+    //1. Recursion + memo
+      int numPaths(int i, int j,int m,int n,vector<vector<int>> &dp,vector<vector<int>>& obstacleGrid) {
+        
+         if(i==m-1 && j==n-1) 
+        {
+            return obstacleGrid[i][j] == 1 ? 0 : 1; // the edge case, robor is blocked in the top-left corner.
+
+        }
+        if (i >=m || j >=n) 
+        {
+            return 0;
+        }
+        
+        
+        if(dp[i][j]!=-1) return dp[i][j];
+        
+        
+        int count=0;
+        if(obstacleGrid[i][j]==1)
+        {
+            count=0;
+        }
+        else
+        {
+            count+=numPaths(i + 1, j,m,n,dp,obstacleGrid);
+            count+= numPaths(i, j + 1,m,n,dp,obstacleGrid);
+        }
+        dp[i][j]=count;
+        
+        return count;
+        
+        
+    }
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
         int m=obstacleGrid.size();
         int n=obstacleGrid[0].size();
-        
-        vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
-        dp[1][0] = 1;
-        //dp[0][1] = 1;
-        
-        for (int i = 1; i <=m; i++) {
-            for (int j= 1; j <= n; j++) {
-               if(obstacleGrid[i-1][j-1]==0){
-                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
-                }
-            }
-        }
-        return dp[m][n];
+        vector<vector<int>> dp(m, vector<int>(n, -1));
+        return numPaths(0,0,m,n,dp,obstacleGrid);
     }
+    
+    
+    //2.DP
+//     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+//         int m=obstacleGrid.size();
+//         int n=obstacleGrid[0].size();
+        
+//         vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
+//         dp[1][0] = 1;
+//         //dp[0][1] = 1;
+        
+//         for (int i = 1; i <=m; i++) {
+//             for (int j= 1; j <= n; j++) {
+//                if(obstacleGrid[i-1][j-1]==0){
+//                     dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+//                 }
+//             }
+//         }
+//         return dp[m][n];
+//     }
 };
