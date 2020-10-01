@@ -41,25 +41,25 @@ public:
     
         while(T<=B && L<=R)
         {
-            if(dir==0)
+            if(dir==0)     //left to right
             {
                 for(i=L;i<=R;i++)
                     ans.push_back(A[T][i]);
                 T++;
             }
-            else if(dir==1)
+            else if(dir==1)    // up to down
             {
                 for(i=T;i<=B;i++)
                     ans.push_back(A[i][R]);
                 R--;
             }
-            else if(dir==2)
+            else if(dir==2)  //right to left
             {
                 for(i=R;i>=L;i--)
                     ans.push_back(A[B][i]);
                 B--;
             }
-            else if(dir==3)
+            else if(dir==3)    //down to up
             {
                 for(i=B;i>=T;i--)
                     ans.push_back(A[i][L]);
