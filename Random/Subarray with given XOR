@@ -1,0 +1,70 @@
+Count the number of subarrays having a given XOR
+
+Given an array of integers arr[] and a number m, count the number of subarrays having XOR of their elements as m.
+
+Examples:
+
+Input : arr[] = {4, 2, 2, 6, 4}, m = 6
+Output : 4
+Explanation : The subarrays having XOR of 
+              their elements as 6 are {4, 2}, 
+              {4, 2, 2, 6, 4}, {2, 2, 6},
+               and {6}
+
+Input : arr[] = {5, 6, 7, 8, 9}, m = 5
+Output : 2
+Explanation : The subarrays having XOR of
+              their elements as 2 are {5}
+              and {5, 6, 7, 8, 9}
+
+
+
+//1.o(n^2)
+
+long long subarrayXor(int arr[], int n, int m) 
+{ 
+    long long ans = 0;  
+    
+    for (int i = 0; i < n; i++) { 
+        int xorSum = 0; // Store XOR of current subarray
+        for (int j = i; j < n; j++) { 
+            // calculate xorSum 
+            xorSum = xorSum ^ arr[j]; 
+
+            if (xorSum == m) 
+                ans++; 
+        } 
+    } 
+    return ans; 
+} 
+
+//2.o(n) 
+//An Efficient Solution solves the above problem in O(n) time. Let us call the XOR of all elements in the range [i+1, j] as A,
+//in the range [0, i] as B, and in the range [0, j] as C. If we do XOR of B with C, the overlapping elements in [0, i] from B 
+//and C zero out and we get XOR of all elements in the range [i+1, j], i.e. A. Since A = B XOR C, we have B = A XOR C. Now,
+//if we know the value of C and we take the value of A as m, we get the count of A as the count of all B satisfying this relation.
+//Essentially, we get the count of all subarrays having XOR-sum m for each C. As we take sum of this count over all C, we get our answer.
+
+int Solution::solve(vector<int> &A, int B) {
+    map<int,int> mp;
+    int Xor=0,count=0;
+    
+    for(auto a: A)
+    {
+        Xor^=a;
+        
+        if(Xor==B)
+        {
+            count++;
+        }
+        
+        if(mp.find(Xor^B)!=mp.end())
+        {
+            count+=mp[Xor^B];
+        }
+        mp[Xor]++;
+    }
+    return count;
+}
+
+https://www.youtube.com/watch?v=lO9R5CaGRPY&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=23
