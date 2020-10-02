@@ -45,6 +45,9 @@ long long subarrayXor(int arr[], int n, int m)
 //if we know the value of C and we take the value of A as m, we get the count of A as the count of all B satisfying this relation.
 //Essentially, we get the count of all subarrays having XOR-sum m for each C. As we take sum of this count over all C, we get our answer.
 
+or Simply is Xr is the xor of subarray and Xr=A^B  ,then A=Xr^B  (as we know both Xr and B is the given Xor)  ,So our problem is reduces to Only find the no. of  A 
+which satisfy the given condition
+
 int Solution::solve(vector<int> &A, int B) {
     map<int,int> mp;
     int Xor=0,count=0;
