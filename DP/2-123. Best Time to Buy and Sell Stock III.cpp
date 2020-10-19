@@ -119,18 +119,21 @@ public:
     // for s3 we can buy a share spend money of s2 - prices[i] or continue skip
     // for s4 we can sell a share earn profit of s3 + prices[i] or continue skip
 
-    public int maxProfit(vector<int> prices) {
-        if (prices.size() == 0) return 0;
+     int maxProfit(vector<int>& prices) {
+        if(!prices.size())
+            return 0;
         
-        int s1 = -prices[0], s2 = INT_MAX, s3 = INT_MIN, s4 = INT_MIN;
-        for (int i = 1; i < prices.length; i++) {
-            s1 = max(s1, -prices[i]);
-            s2 = max(s2, s1 + prices[i]);
-            s3 = max(s3, s2 - prices[i]);
-            s4 = max(s4, s3 + prices[i]);
+        int s1= INT_MAX;
+        int s2 = INT_MIN;
+        int s3 = INT_MAX;
+        int s4= INT_MIN;
+        for(int i = 0; i < prices.size(); i++){
+            s1 = min(s1, prices[i]);
+            s2 = max(s2, prices[i] - s1);
+            s3 = min(s3, prices[i] - s2);
+            s4 = max(s4, prices[i] - s3);
         }
-        
-        return max(0, s4);
+        return s4;
     }
 };
 
