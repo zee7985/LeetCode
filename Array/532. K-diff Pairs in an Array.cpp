@@ -32,8 +32,8 @@ public:
     //     set< pair<int,int> > s;
     //     unordered_set<int> hash;
     //     for(int x: nums) {
-    //         if(hash.find(x+k) != hash.end()) s.insert({min(x+k, x), max(x+k, x)});
-    //         if(hash.find(x-k) != hash.end()) s.insert({min(x-k, x), max(x-k, x)});
+    //         if(hash.find(x+k) != hash.end()) s.insert({x,x+k});
+    //         if(hash.find(x-k) != hash.end()) s.insert({x-k, x});
     //         hash.insert(x);
     //     }
     //     return s.size();
