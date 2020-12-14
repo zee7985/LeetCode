@@ -1,0 +1,110 @@
+Find number of pairs (x, y) in an array such that x^y > y^x
+0Given two arrays X[] and Y[] of positive integers, find number of pairs such that x^y > y^x where x is an element from X[] and y is an element from Y[].
+
+Examples:
+
+Input: X[] = {2, 1, 6}, Y = {1, 5} 
+Output: 3 
+Explanation: There are total 3 pairs where pow(x, y) is greater 
+than pow(y, x) Pairs are (2, 1), (2, 5) and (6, 1)
+
+Input: X[] = {10, 19, 18}, Y[] = {11, 15, 9} 
+Output: 2 
+Explanation: There are total 2 pairs where pow(x, y) is greater 
+than pow(y, x) Pairs are (10, 11) and (10, 15)
+
+
+//Brute Force -o(n^2)
+int countPairsBruteForce(int X[], int Y[], 
+                         int m, int n) 
+{ 
+    int ans = 0; 
+    
+    for(int i = 0; i < m; i++) 
+       for(int j = 0; j < n; j++) 
+          if (pow(X[i], Y[j]) > pow(Y[j], X[i])) 
+              ans++; 
+    
+    return ans; 
+} 
+
+//2.Trick-O(nLogn + mLogn) 
+Following are simple steps based on this trick.  
+
+Sort array Y[].
+For every x in X[], find the index idx of smallest number greater than x (also called ceil of x) in Y[] using binary search or we can use the inbuilt function upper_bound() in algorithm library.
+All the numbers after idx satisfy the relation so just add (n-idx) to the count.
+Base Cases and Exceptions: 
+Following are exceptions for x from X[] and y from Y[]  
+
+If x = 0, then the count of pairs for this x is 0.
+If x = 1, then the count of pairs for this x is equal to count of 0s in Y[].
+x smaller than y means x^y is greater than y^x.
+x = 2, y = 3 or 4
+x = 3, y = 2
+
+int getIndex(int y[] , int n , int ele){
+        
+        int low = 0;
+        int high = n-1;
+        int ans = -1;
+        while(low<=high){
+            int mid = (low+high)/2;
+            if(y[mid] >ele){
+                ans = mid;
+                high  =mid -1;
+            }
+            else {
+                low = mid+1;
+            }
+        }
+        return ans;
+    }
+    
+    
+    long countPairs(int[] x, int[] y, int m, int n) {
+        
+        int zeros = 0,one = 0 , three = 0 , four = 0,two= 0;
+        sort(x,x+m);
+        sort(y,y+n);
+        
+        for(int i  =0;i<n;i++){
+            if(y[i]==0)zeros++;
+            if(y[i]==1)one++;
+            if(y[i]==3)three++;
+            if(y[i]==4)four ++;
+            if(y[i]==2)two++;
+        }
+        
+        //traversing x elements
+        long ans = 0;
+        for(int i =0;i<m;i++){
+            if(x[i]==0){
+                continue;
+            }
+            else if(x[i]==1){
+               ans +=zeros; 
+            }
+            else if(x[i]==2){
+                int index = getIndex(y , n , 2);
+                if(index != -1){
+                    ans += n - index;
+                }
+                ans -=three;
+                ans -=four;
+                ans += one +zeros;
+            }
+            else{
+                int index = getIndex(y , n , x[i]);
+                if(index!=-1){
+                    ans+=n-index;
+                }
+                ans += one +zeros;
+                if(x[i]==3){
+                    ans+=two;
+                }
+            }
+        }
+        return ans;
+        
+    }
