@@ -71,7 +71,7 @@ vector<vector<int> > Solution::diagonal(vector<vector<int> > &A) {
     {
         vector<int> v;
     
-        int col = i, row = 0;
+        int col = i, row = 0;       //FOr diagonal traversal -change row with col
         while(col >= 0)
         {
             v.push_back(A[row][col]);
