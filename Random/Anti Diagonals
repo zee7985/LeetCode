@@ -43,13 +43,13 @@ Solution:
 7 8 9     (2,0)  (2,1)  (2,2)
 
 
+//1.
 vector<vector<int> > Solution::diagonal(vector<vector<int> > &A) {
     int n=A.size();
     vector<vector<int>> v(2*n-1);
     
     
-    for(int i=0;i
-    <n;i++)
+    for(int i=0;i<n;i++)
     {
         for(int j=0;j<n;j++)
         {
@@ -58,3 +58,45 @@ vector<vector<int> > Solution::diagonal(vector<vector<int> > &A) {
     }
     return v;
 }
+
+
+//2.
+vector<vector<int> > Solution::diagonal(vector<vector<int> > &A) {
+    //uppertriangular
+    vector<vector<int>> ans;
+
+    int n = A.size();
+
+    for(int i =0; i <n; i++)
+    {
+        vector<int> v;
+    
+        int col = i, row = 0;
+        while(col >= 0)
+        {
+            v.push_back(A[row][col]);
+            row++;
+            col--;
+        }
+        ans.push_back(v);
+    }
+
+    //lower triangle
+    for(int i = 1; i< n; i++)
+    {
+    
+        vector<int> v;
+    
+        int row = i, col = n-1;
+        while(row <= n-1)
+        {
+            v.push_back(A[row][col]);
+            row++;
+            col--;
+        }
+        ans.push_back(v);
+    }
+
+    return ans;
+}
+
