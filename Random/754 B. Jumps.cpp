@@ -49,6 +49,14 @@ In the third test case, you need two jumps: the 1-st one as +1 and the 2-nd one 
 In the fourth test case, you need three jumps: the 1-st one as −1, the 2-nd one as +2 and the 3-rd one as +3, so 0−1+2+3=4.
 
 
+	
+	
+Solution : We will reach reach no greater than x;
+	For eg-x=12 ,we will reach (1+2+3+4+5)=15
+	Now for difference greater than 1 ,eg -3 here ,we can replace any number by -1 ,so that diff become equal (no +1)
+		diff(3)=2-(-1)  i.e - 1 -1 +3+4+5=12(replaced 2 by -1) ,return step ;
+	If diff==1,return step+1
+	
 
 
 #include <iostream>
@@ -75,16 +83,4 @@ int main()
 	}
 }
 
-#include<bits/stdc++.h>
-using namespace std;
-int main()
-{
-	int t,x;cin>>t;
-  while(t--)
-	{
-		cin>>x;int y=0,i=0;
-		while(y<=x+1&&y!=x)
-		y+=++i;
-		cout<<i<<endl;
-	}
-}
+
