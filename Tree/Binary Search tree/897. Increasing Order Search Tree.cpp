@@ -36,7 +36,7 @@ The number of nodes in the given tree will be in the range [1, 100].
  */
 class Solution {
 public:
-    //O(n) with O(H) space-H:Height of tree
+    //O(n) with O(H) space-H:Height of tree(stack)
     //Inorder Traversal 
     void inorder(TreeNode* root,TreeNode* &ans)
     {
