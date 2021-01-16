@@ -127,5 +127,72 @@ public:
         dfs(beginWord,endWord,path,graph);
         return ans;
     }
+  
+   vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList)
+    {
+        set<string>s;
+        for(auto w :wordList )
+        {
+            s.insert(w);
+        }
+        
+        if(s.find(endWord)==s.end())
+        {
+            return {};
+        }
+        
+        vector<vector<string>>ans;
+        queue<vector<string>> q;
+        q.push({beginWord});
+        bool flag=false;
+        
+        while(!q.empty())
+        {
+            int size=q.size();
+            unordered_set<string> visited;
+            while(size--)
+            {
+                vector<string> currVec=q.front(); q.pop();
+                
+                string curr=currVec.back();
+
+            
+                for(int i=0;i<curr.length();i++)
+                {
+                    string temp=curr;
+                    
+                    for(char j='a';j<='z';j++)
+                    {
+                        temp[i]=j;
+                        if(temp==curr)
+                        {
+                            continue;
+                        }
+                        
+                        if(temp==endWord)
+                        {
+                            currVec.push_back(temp);
+                            flag=true;
+                            ans.push_back(currVec);
+                        }
+                        
+                        if(s.find(temp)!=s.end())
+                        {
+                            currVec.push_back(temp);
+                            q.push(currVec);
+                            currVec.pop_back();
+                            visited.insert(temp);
+                        }
+                    }
+                 }
+            }
+            if(flag==true) break;
+             for(auto a: visited)   //red ted tad ,red ted tex , red rex tex  //Erased here because tex will be deleted and can't be used in rex
+            {
+                s.erase(a);
+            }
+        }
+        return ans;
+    }
     
 };
