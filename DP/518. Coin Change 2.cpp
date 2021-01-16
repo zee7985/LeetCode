@@ -51,7 +51,7 @@ public:
 //         return coinHelper(amount,0,coins);
 //     }
     
-    //DP
+    //DP -Bottom up
     int change(int amount, vector<int>& coins) {
         vector<int>dp(amount + 1);
         dp[0] = 1;
