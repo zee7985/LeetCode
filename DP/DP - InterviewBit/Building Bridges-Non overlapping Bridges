@@ -1,0 +1,88 @@
+Dynamic Programming | Building Bridges
+Difficulty Level : Medium
+Consider a 2-D map with a horizontal river passing through its center. There are n cities on the southern bank 
+with x-coordinates a(1) … a(n) and n cities on the northern bank with x-coordinates b(1) … b(n). 
+You want to connect as many north-south pairs of cities as possible with bridges such that no two bridges cross.
+When connecting cities, you can only connect city a(i) on the northern bank to city b(i) on the southern bank. 
+Maximum number of bridges that can be built to connect north-south pairs with the aforementioned constraints.
+
+
+
+The values in the upper bank can be considered as the northern x-coordinates of the cities and the values in the bottom bank 
+can be considered as the corresponding southern x-coordinates of the cities to which the northern x-coordinate city can be connected.
+
+Examples:
+
+Input : 6 4 2 1
+        2 3 6 5
+Output : Maximum number of bridges = 2
+Explanation: Let the north-south x-coordinates
+be written in increasing order.
+
+1  2  3  4  5  6
+  \  \
+   \  \        For the north-south pairs
+    \  \       (2, 6) and (1, 5)
+     \  \      the bridges can be built.
+      \  \     We can consider other pairs also,
+       \  \    but then only one bridge can be built 
+        \  \   because more than one bridge built will
+         \  \  then cross each other.
+          \  \
+1  2  3  4  5  6 
+
+
+Solution : Sort on the basis of north pair (this will ensure curEle is greater than previous North element ) 
+            ANd find LIS based on south pair(this will ensure curEle is greater than previous South element ) 
+            BOth the above step will ensure and give non-overlapping bridges 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool cmp(pair<int,int> a,pair<int,int> b){
+	return a.first<b.first;
+}
+
+int main(){
+	int n;
+	cin>>n;
+	int north[n];
+	int south[n];
+	for(int i=0;i<n;i++){
+		cin>>north[i];
+	}
+	for(int i=0;i<n;i++){
+		cin>>south[i];
+	}
+
+	pair<int,int> arr[n];
+	for(int i=0;i<n;i++){
+		arr[i]={north[i],south[i]};
+	}
+
+	sort(arr,arr+n,cmp);
+
+	int dp[n];
+	dp[0]=1;
+	for(int i=1;i<n;i++){
+		int maxm=1;
+		for(int j=i-1;j>=0;j--){
+			if(arr[j].second<=arr[i].second){
+				int anss=dp[j]+1;
+				if(anss>maxm){
+					maxm=anss;
+				}
+			}
+		}
+		dp[i]=maxm;
+	}
+
+	int ans=0;
+	for(int i=0;i<n;i++){
+		ans=max(ans,dp[i]);
+	}
+
+	cout<<ans<<endl;
+}
+
+	
