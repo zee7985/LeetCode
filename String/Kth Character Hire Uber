@@ -1,0 +1,60 @@
+You are given two strings S and T. An infinitely long string is formed in the following manner:
+
+Take an empty string
+Append S one time.
+Append T two times.
+Append S three times.
+Append T four times.
+and so on, appending the strings alternately and increasing the number of repetitions by 1 each time.
+
+You will also be given an integer K, you need to tell the Kth Character of this infinitely long string.
+
+Sample Input:
+S = "a", T = "bc", K = 4
+
+Sample Output:
+b
+
+Sample Explanation:
+The string formed will be "abcbcaaabcbcbcbcaaaaa...". So the 4th character is "b".
+
+[execution time limit] 1 seconds (cpp)
+
+[input] string s
+
+The first string. 1 <= len(S) <= 100
+
+[input] string t
+
+The second string. 1 <= len(T) <= 100.
+
+[input] integer64 k
+
+The integer K, as above.
+1 <= K <= 10^16
+
+[output] char
+
+The kth character of the infinitely long string formed.
+
+s1 = 'a'
+s2 = 'bc'
+k = 600
+
+counter1 = 1
+counter2 = 2
+while(k>0):
+ if k > counter1 * len(s1):
+    k = k - counter1 * len(s1)
+    counter1 += 2
+    if k > counter2 * len(s2):
+     k = k - counter2 * len(s2)
+     counter2 += 2
+    else:
+     temp_str = counter2 * s2
+     print (temp_str[k-1])
+     break
+  else:
+    temp_str = counter1 * s1
+    print (temp_str[k-1])
+    break
