@@ -58,6 +58,9 @@ cost.length == 9
 
 class Solution {
 public:
+        //1. Recursion : we can take either take a elem and decrease from target and start from 0 index again
+    //2. Use permutation try to check all the coins/cost here to form ans from 1 to given target 
+    
     string maxStr(string a,string b)
     {
         if(a.length()>b.length())
@@ -76,28 +79,21 @@ public:
         }
         return "";
     }
-  
+    
     string largestNumber(vector<int>& cost, int target) {
-        vector<vector<string>> dp(10,vector<string>(target+1,"0"));  //0 means no path possible
+        vector<string> dp(target + 1,"");
         
-        for(int i=0; i<10; i++)   //"" means path possible with 0 target
-            dp[i][0]="";
-        
-        for(int i=1;i<=9;i++)
-        {
-            for(int j=1;j<=target;j++)
-            {
-                dp[i][j]=dp[i-1][j];
-                if(cost[i-1]<=j && dp[i][j-cost[i-1]]!="0")
-                {
-                    string str=to_string(i)+ dp[i][j-cost[i-1]];
-                    dp[i][j]=maxStr(dp[i][j],str);
-                }
+        for(int i=1;i<=target;i++){
+            string ans = "0";
+            for(int j=1;j<=cost.size();j++){
+               if((i - cost[j-1])>=0 && dp[i - cost[j-1]]!="0"){ //0-index 
+                   string currAns = dp[i - cost[j - 1]] + to_string(j);
+                   ans = maxStr(ans,currAns);
+               } 
             }
-                                        
-                                                  
+            dp[i]=ans;
         }
-        return dp[9][target];
+        return dp[target];
     }
 };
 
